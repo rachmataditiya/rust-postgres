@@ -515,9 +515,12 @@ mod test {
 
     /// The raw read accepts and refuses exactly the bodies `Row::new` accepts and refuses,
     /// with the same error text.
+    /// A field count, the fields sent and the statement's column count.
+    type CountCase<'a> = (u16, &'a [Option<&'a [u8]>], usize);
+
     #[test]
     fn field_count_check_agrees_with_row() {
-        let cases: [(u16, &[Option<&[u8]>], usize); 5] = [
+        let cases: [CountCase<'_>; 5] = [
             (2, &[Some(&b"x"[..]), Some(&b"y"[..])], 2),
             (2, &[Some(&b"x"[..]), None], 2),
             (0, &[], 0),
